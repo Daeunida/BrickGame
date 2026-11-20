@@ -1,0 +1,46 @@
+# 환경 변수와 비밀 설정
+.env
+.env.*
+
+# 가상환경
+.venv/
+venv/
+env/
+ENV/
+
+# 파이썬 캐시와 빌드 결과
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# 패키지와 빌드 산출물
+node_modules/
+.next/
+.cache/
+coverage/
+
+# 로그, 편집기와 임시 파일
+*.log
+logs/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.tmp
+.DS_Store
+Thumbs.db
+
+# 개인정보가 포함될 수 있는 파일
+01-intro/개인정보.txt

@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>자기소개</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --sky: #d8f0fd;
+      --grass: #e0f1cc;
+      --paper: #fffdf4;
+      --ink: #20332a;
+      --line: #2e4638;
+      --shadow: #95ad9e;
+      --highlight: #f6d376;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background-color: var(--sky);
+      background-image: radial-gradient(#31573529 1px, transparent 1px);
+      background-size: 24px 24px;
+      font: 1rem/1.65 "맑은 고딕", "Apple SD Gothic Neo", sans-serif;
+      overflow-wrap: break-word;
+    }
+
+    body[data-background="grass"] { background-color: var(--grass); }
+
+    main {
+      width: min(52rem, calc(100% - 3rem));
+      margin-inline: auto;
+      padding-block: clamp(2.5rem, 6vw, 5rem) 3rem;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h2 { margin-bottom: .8rem; font-size: 1.3rem; }
+    section { margin-top: 1.8rem; }
+
+    .intro, .hobbies li, .movie, button {
+      border: 2px solid var(--line);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+
+    .intro {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(1.3rem, 4vw, 2.5rem);
+      background: var(--paper);
+    }
+
+    .intro::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 8px;
+      background: repeating-linear-gradient(90deg, #7da953 0 24px, #a5c86f 24px 48px);
+    }
+
+    .intro h1 {
+      font-size: clamp(2.3rem, 7vw, 4rem);
+      line-height: 1.15;
+      letter-spacing: -.05em;
+      margin-bottom: .7rem;
+    }
+
+    .intro p { max-width: 32rem; }
+    /* 하늘 위에 네모난 구름과 나무, 잔디 지형을 쌓습니다. */
+    .scenery { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: -1; }
+    .scenery::after {
+      content: ""; position: absolute; inset: auto 0 0; height: 18vh;
+      border-top: 18px solid #80ae5d;
+      background: repeating-linear-gradient(90deg, #a17d58 0 36px, #aa8762 36px 72px);
+    }
+    .block-cloud {
+      position: absolute; top: 9%; left: 5%; width: 100px; height: 24px; background: #fff;
+      box-shadow: 24px -20px #fff, 48px -20px #fff, 72px 0 #fff, 280px 105px #fff, 304px 85px #fff, 328px 85px #fff, 352px 105px #fff;
+      opacity: .8;
+    }
+    .block-tree {
+      position: absolute; right: 6%; bottom: 17vh; width: 32px; height: 100px;
+      background: #795c3b; box-shadow: inset -8px 0 #674b34;
+    }
+    .block-tree::before {
+      content: ""; position: absolute; width: 96px; height: 72px; left: -32px; top: -55px;
+      background: #578c4b; box-shadow: inset 16px 0 #6ca759, inset -16px -16px #46743f, 16px -16px #6ca759;
+    }
+    body { isolation: isolate; }
+    .intro-list { list-style: none; padding: 0; margin: 1rem 0 0; }
+    .intro-list li + li { margin-top: .25rem; }
+    .movie + .movie { margin-top: 1rem; }
+
+    /* 블록 마을의 야외 영화와 모닥불 장면입니다. */
+    .village-scene {
+      position: relative;
+      height: 210px;
+      margin: 0 0 1.8rem;
+      overflow: hidden;
+      border: 3px solid var(--line);
+      background: linear-gradient(#91d8ef 0 68%, #8ac65e 68% 77%, #a87951 77%);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+    body[data-background="grass"] .village-scene {
+      background: linear-gradient(#c5e9a2 0 68%, #6fb15a 68% 77%, #987150 77%);
+    }
+    .village-scene::before {
+      content: "";
+      position: absolute;
+      width: 64px; height: 16px;
+      top: 28px; left: 7%;
+      background: #fff;
+      box-shadow: 16px -16px #fff, 32px -16px #fff, 48px 0 #fff,
+        340px 22px #fff, 356px 6px #fff, 372px 6px #fff, 388px 22px #fff;
+    }
+    .screen {
+      position: absolute; left: 8%; bottom: 34px;
+      width: 128px; height: 95px;
+      background: #fff3d1;
+      border: 7px solid #634a3b;
+      box-shadow: 8px 8px 0 #5b7954;
+    }
+    .screen::after {
+      content: "▶";
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      color: #e47c5e; font-size: 2rem;
+    }
+    .campfire {
+      position: absolute; left: 57%; bottom: 30px;
+      width: 52px; height: 12px;
+      background: #69412f;
+      box-shadow: 0 8px #493428;
+    }
+    .campfire::before {
+      content: ""; position: absolute; left: 14px; bottom: 8px;
+      width: 24px; height: 30px;
+      background: #ffad38;
+      box-shadow: inset 8px -8px #f15c3e, 8px -8px #ffd365;
+    }
+    .campfire::after {
+      content: ""; position: absolute; left: -5px; bottom: 40px;
+      width: 55px; height: 5px; background: #563b2d;
+      box-shadow: 12px -7px #ae593c, 22px -7px #ae593c, 32px -7px #ae593c;
+    }
+    .villager {
+      position: absolute; bottom: 30px;
+      width: 30px; height: 42px;
+      background: #cf6d5d;
+      box-shadow: inset -8px 0 #ab594d, 0 13px #493b4a;
+    }
+    .villager::before {
+      content: ""; position: absolute; left: 1px; bottom: 39px;
+      width: 28px; height: 28px;
+      background: #efbd8a;
+      border-top: 7px solid #634339;
+      box-shadow: inset -6px 0 #d79f77;
+    }
+    .villager::after {
+      content: ""; position: absolute; top: -24px; left: 7px;
+      width: 4px; height: 4px;
+      background: #332d2c;
+      box-shadow: 12px 0 #332d2c;
+    }
+    .villager.one { left: 38%; }
+    .villager.two { left: 47%; background: #6190b3; }
+    .villager.three { left: 75%; background: #b889bd; }
+    @media (max-width: 37rem) {
+      .village-scene { height: 170px; }
+      .screen { left: 3%; width: 75px; height: 65px; }
+      .villager.one { left: 34%; }
+      .villager.two { left: 47%; }
+      .villager.three { left: 80%; }
+      .campfire { left: 62%; width: 40px; }
+    }
+    .hobbies {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .9rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .hobbies li {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .8rem .9rem;
+      min-height: 4rem;
+      background: #eff9fc;
+      font-weight: 700;
+    }
+
+    .hobbies li:nth-child(2) { background: #f4f0ff; }
+    .hobbies li:nth-child(3) { background: #fff3cd; }
+
+    /* 작은 네모를 쌓아 카드마다 다른 픽셀 장식을 만듭니다. */
+    .pixel {
+      flex: 0 0 2rem;
+      width: 2rem;
+      height: 2rem;
+      position: relative;
+    }
+
+    .pixel::before {
+      position: absolute;
+      content: "";
+      top: 4px;
+      left: 4px;
+      width: 4px;
+      height: 4px;
+    }
+
+    .cloud::before {
+      color: #3177a1;
+      box-shadow: 8px 0, 12px 0, 4px 4px, 8px 4px #fff, 12px 4px #fff,
+        16px 4px, 0 8px, 4px 8px #fff, 8px 8px #fff, 12px 8px #fff,
+        16px 8px #fff, 20px 8px, 0 12px, 4px 12px #a4d7ec,
+        8px 12px #a4d7ec, 12px 12px #a4d7ec, 16px 12px #a4d7ec,
+        20px 12px, 4px 16px, 8px 16px, 12px 16px, 16px 16px;
+    }
+
+    .note::before {
+      color: #634989;
+      box-shadow: 12px 0, 16px 0, 20px 4px, 12px 4px, 12px 8px, 12px 12px,
+        12px 16px, 8px 16px, 4px 16px, 4px 20px, 8px 20px, 12px 20px;
+    }
+
+    .film::before {
+      top: 7px;
+      color: #855025;
+      box-shadow: 0 0, 4px 0, 8px 0, 12px 0, 16px 0, 20px 0, 0 4px,
+        8px 4px, 16px 4px, 20px 4px, 0 8px, 4px 8px, 8px 8px, 12px 8px,
+        16px 8px, 20px 8px, 0 12px, 20px 12px, 0 16px, 4px 16px, 8px 16px,
+        12px 16px, 16px 16px, 20px 16px;
+    }
+
+    .movie {
+      display: grid;
+      grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(1rem, 3vw, 1.75rem);
+      padding: clamp(1rem, 3vw, 1.5rem);
+      background: var(--paper);
+    }
+
+    .poster {
+      display: block;
+      width: 100%;
+      max-width: 8rem;
+      height: auto;
+      border: 2px solid var(--line);
+    }
+
+    .movie h3 { font-size: clamp(1.6rem, 4vw, 2.1rem); }
+    .movie p { margin-top: .45rem; }
+    .source { font-size: .875rem; }
+    .source a { color: #315b43; text-underline-offset: .2em; }
+
+    .background-control {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .65rem 1rem;
+      margin-top: 1.75rem;
+    }
+
+    button {
+      padding: .65rem 1rem;
+      background: var(--highlight);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:hover { background: #ffdf90; }
+    button:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--shadow); }
+    :focus-visible { outline: 3px solid #28577d; outline-offset: 4px; }
+    #background-status { font-size: .875rem; }
+
+    @media (max-width: 37rem) {
+      /* 블록 마을의 야외 영화와 모닥불 장면입니다. */
+    .village-scene {
+      position: relative;
+      height: 210px;
+      margin: 0 0 1.8rem;
+      overflow: hidden;
+      border: 3px solid var(--line);
+      background: linear-gradient(#91d8ef 0 68%, #8ac65e 68% 77%, #a87951 77%);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+    body[data-background="grass"] .village-scene {
+      background: linear-gradient(#c5e9a2 0 68%, #6fb15a 68% 77%, #987150 77%);
+    }
+    .village-scene::before {
+      content: "";
+      position: absolute;
+      width: 64px; height: 16px;
+      top: 28px; left: 7%;
+      background: #fff;
+      box-shadow: 16px -16px #fff, 32px -16px #fff, 48px 0 #fff,
+        340px 22px #fff, 356px 6px #fff, 372px 6px #fff, 388px 22px #fff;
+    }
+    .screen {
+      position: absolute; left: 8%; bottom: 34px;
+      width: 128px; height: 95px;
+      background: #fff3d1;
+      border: 7px solid #634a3b;
+      box-shadow: 8px 8px 0 #5b7954;
+    }
+    .screen::after {
+      content: "▶";
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      color: #e47c5e; font-size: 2rem;
+    }
+    .campfire {
+      position: absolute; left: 57%; bottom: 30px;
+      width: 52px; height: 12px;
+      background: #69412f;
+      box-shadow: 0 8px #493428;
+    }
+    .campfire::before {
+      content: ""; position: absolute; left: 14px; bottom: 8px;
+      width: 24px; height: 30px;
+      background: #ffad38;
+      box-shadow: inset 8px -8px #f15c3e, 8px -8px #ffd365;
+    }
+    .campfire::after {
+      content: ""; position: absolute; left: -5px; bottom: 40px;
+      width: 55px; height: 5px; background: #563b2d;
+      box-shadow: 12px -7px #ae593c, 22px -7px #ae593c, 32px -7px #ae593c;
+    }
+    .villager {
+      position: absolute; bottom: 30px;
+      width: 30px; height: 42px;
+      background: #cf6d5d;
+      box-shadow: inset -8px 0 #ab594d, 0 13px #493b4a;
+    }
+    .villager::before {
+      content: ""; position: absolute; left: 1px; bottom: 39px;
+      width: 28px; height: 28px;
+      background: #efbd8a;
+      border-top: 7px solid #634339;
+      box-shadow: inset -6px 0 #d79f77;
+    }
+    .villager::after {
+      content: ""; position: absolute; top: -24px; left: 7px;
+      width: 4px; height: 4px;
+      background: #332d2c;
+      box-shadow: 12px 0 #332d2c;
+    }
+    .villager.one { left: 38%; }
+    .villager.two { left: 47%; background: #6190b3; }
+    .villager.three { left: 75%; background: #b889bd; }
+    @media (max-width: 37rem) {
+      .village-scene { height: 170px; }
+      .screen { left: 3%; width: 75px; height: 65px; }
+      .villager.one { left: 34%; }
+      .villager.two { left: 47%; }
+      .villager.three { left: 80%; }
+      .campfire { left: 62%; width: 40px; }
+    }
+    .hobbies { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 25rem) {
+      .movie { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body data-background="sky">
+  <div class="scenery" aria-hidden="true"><div class="block-cloud"></div><div class="block-tree"></div></div>
+  <main>
+    <div class="village-scene" role="img" aria-label="블록 마을에서 친구들이 모닥불에 고기를 구우며 영화를 보는 장면">
+      <div class="screen"></div>
+      <div class="villager one"></div>
+      <div class="villager two"></div>
+      <div class="campfire"></div>
+      <div class="villager three"></div>
+    </div>
+    <header class="intro">
+      <h1>안녕하세요!</h1>
+      <p>삼겹살을 좋아해요.</p>
+      <ul class="intro-list">
+        <li>🍽️ 좋아하는 음식은 삼겹살이에요.</li>
+      </ul>
+    </header>
+
+    <section aria-labelledby="hobbies-heading">
+      <h2 id="hobbies-heading">좋아하는 것</h2>
+      <ul class="hobbies">
+        <li><span class="pixel film" aria-hidden="true"></span>삼겹살</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="movie-heading">
+      <h2 id="movie-heading">재미있게 본 영화</h2>
+      <div class="movie"><p>좋아하는 영화는 확인 후 소개할게요.</p></div>
+    </section>
+
+    <div class="background-control">
+      <button type="button" id="background-toggle">배경색 바꾸기</button>
+      <p id="background-status" role="status">현재 배경 하늘색</p>
+    </div>
+  </main>
+
+  <script>
+    const backgroundButton = document.querySelector("#background-toggle");
+    const backgroundStatus = document.querySelector("#background-status");
+
+    // 현재 배경에 따라 다음 색과 안내 문구를 함께 바꿉니다.
+    backgroundButton.addEventListener("click", () => {
+      const showGrass = document.body.dataset.background === "sky";
+      document.body.dataset.background = showGrass ? "grass" : "sky";
+      backgroundStatus.textContent = showGrass ? "현재 배경 잔디색" : "현재 배경 하늘색";
+    });
+  </script>
+</body>
+</html>

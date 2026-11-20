@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>벽돌깨기</title>
+  <link rel="stylesheet" href="brick_game.css">
+  <script src="brick_game.js" defer></script>
+</head>
+<body>
+  <div class="layout">
+  <aside class="side-panel" aria-label="최고 기록 순위">
+    <h2>명예의 전당</h2>
+    <p>이 브라우저의 기록</p>
+    <ol id="leaderboard"></ol>
+  </aside>
+  <main class="game" aria-label="벽돌깨기">
+    <header class="scoreboard">
+      <div class="stats">
+        <span id="score">점수: 0</span>
+        <span id="ball-count">공 1개</span>
+      </div>
+      <div class="guide" role="status">
+        <strong id="state">대기</strong>
+        <span id="message">스페이스키를 눌러 게임을 시작하세요.</span>
+      </div>
+    </header>
+    <div class="field-wrap">
+    <canvas id="field" width="960" height="600" aria-label="벽돌깨기 경기장">
+      이 브라우저에서는 게임 화면을 표시할 수 없습니다.
+    </canvas>
+    <div id="game-over" class="overlay" hidden>
+      <div><strong>GAME OVER</strong><p id="result"></p><p id="restart-hint"></p></div>
+    </div>
+    </div>
+  </main>
+  <aside class="profile-card" aria-label="내 게임 프로필">
+    <div class="card-title">선수 카드</div>
+    <div id="profile-avatar" class="avatar" aria-hidden="true">👤</div>
+    <label for="player-name">닉네임</label>
+    <input id="player-name" maxlength="16" value="플레이어" autocomplete="off">
+    <label for="player-style">캐릭터 색상</label>
+    <select id="player-style"><option value="green">초록</option><option value="blue">파랑</option><option value="red">빨강</option></select>
+    <p>최고 기록 <strong id="personal-best">0개</strong></p>
+    <p class="card-help">닉네임별로 기록을 저장해요</p>
+  </aside>
+  </div>
+</body>
+</html>
